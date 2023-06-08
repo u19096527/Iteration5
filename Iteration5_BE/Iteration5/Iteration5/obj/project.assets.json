@@ -3112,11 +3112,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5\\Iteration5.csproj",
+      "projectUniqueName": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5_BE\\Iteration5\\Iteration5\\Iteration5.csproj",
       "projectName": "Iteration5",
-      "projectPath": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5\\Iteration5.csproj",
+      "projectPath": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5_BE\\Iteration5\\Iteration5\\Iteration5.csproj",
       "packagesPath": "C:\\Users\\Wisani\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5\\obj\\",
+      "outputPath": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5_BE\\Iteration5\\Iteration5\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
