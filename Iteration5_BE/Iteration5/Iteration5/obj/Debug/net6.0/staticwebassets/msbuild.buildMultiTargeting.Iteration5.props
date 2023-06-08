@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Iteration5.props" />
+</Project>
