@@ -9,11 +9,11 @@
 <div class="row" style="padding-left: 15px;padding-right: 15px;">
     <div class="col-md-9">
         <form (input)="searchHelpTip()">
-            <input [(ngModel)]="searchQuery" type="search" placeholder="Search for a help tip" name="searchQuery" >
+            <input (ngModel)="searchQuery" type="search" placeholder="Search for a help tip" name="searchQuery" >
         </form>     
     </div>
     <div class="col-md-3" style="justify-content: flex-end;text-align: right;padding-top: 10px;">
-        <a [routerLink]="'/add-student'" class="normButton btn">
+        <a class="normButton btn">
             <i class="fas fa-user-plus fa-lg"></i>
             &nbsp;
             ADD NEW HELP TIP
@@ -44,18 +44,18 @@
                     {{item.date}}
                 </td>
                 <td style="text-align: right;">
-                    <button class="btn update" (click)="goToEditStudent(item.student_ID)" ><i
+                    <button class="btn update" (click)="goToEditHelpTip(item.help_Id)" ><i
                             class="fa fa-edit"></i>&nbsp;&nbsp; 
                             EDIT 
                     </button>
                     <button class="btn delete" style="margin-left: 4px;" data-toggle="modal"
-                        [attr.data-target]="'#removeModal-'+item.student_ID" ><i class="far fa-trash-alt"></i>&nbsp;&nbsp; 
+                        [attr.data-target]="'#removeModal-'+item.help_Id" ><i class="far fa-trash-alt"></i>&nbsp;&nbsp; 
                         DELETE 
                     </button>
                 </td>
 
                 <!-- MODAL FOR DELETE STUDENT-->
-                <div class="modal fade" [id]="'removeModal-'+ item.student_ID" role="dialog" data-backdrop="false">
+                <div class="modal fade" [id]="'removeModal-'+ item.help_Id" role="dialog" data-backdrop="false">
                     <div class="modal-dialog modal-md">
 
                         <!-- Modal content-->
@@ -68,12 +68,12 @@
                                     <h5>
                                         <i class="fa fa-exclamation-triangle fa-2x"
                                             style="color: #FFDB58;"></i>&nbsp;&nbsp; 
-                                            Are you sure you want to delete this student?
+                                            Are you sure you want to delete this help tip?
                                     </h5>
                                 </div>
                                 <div style="text-align: center;margin-top: 5px;margin-bottom: 5px;">
                                     <button type="button" class="btn update" style="width: 140px;" data-dismiss="modal"
-                                        data-toggle="modal" data-target="#successModal" (click)="deleteStudent(item.student_ID)"> 
+                                        data-toggle="modal" data-target="#successModal" (click)="deleteHelpTip(item.help_Id)"> 
                                         CONFIRM
                                     </button>
                                     <button type="button" class="btn normCancel" data-dismiss="modal"
@@ -108,7 +108,7 @@
                 </div>
                 <div style="text-align: center;margin-top: 5px;margin-bottom: 5px;">
                     <a type="button" class="btn update" style="width: 140px;" data-dismiss="modal"
-                        [routerLink]="'/supplier'"> OKAY
+                        > OKAY
                 </a>
                 </div>
             </div>

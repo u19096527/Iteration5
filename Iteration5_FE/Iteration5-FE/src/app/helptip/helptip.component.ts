@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HelpTip } from '../shared/help-tip';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 
 export class HelptipComponent {
-  arrHelpTips: HelpTip[] = []
+  arrHelpTips: HelpTip[] = [];
   constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit(): void {
