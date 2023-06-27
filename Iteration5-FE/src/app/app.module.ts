@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HelptipComponent } from './helptip/helptip.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { HelptipComponent } from './helptip/helptip.component';
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgModule, HttpClientModule
+    NgModule, HttpClientModule, RouterModule
     
   ],
   providers: [],

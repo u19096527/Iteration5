@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HelptipComponent } from './helptip/helptip.component'; 
 
 @Component({
   selector: 'app-root',

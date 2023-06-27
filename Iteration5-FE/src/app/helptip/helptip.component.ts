@@ -3,6 +3,8 @@ import { HelpTip } from '../shared/help-tip';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+
 
 
 @Component({
@@ -19,6 +21,7 @@ export class HelptipComponent {
     this.getAllHelpTips()
     console.log(this.arrHelpTips)
   }
+  
 
     //Get All Suppliers
     getAllHelpTips() {
