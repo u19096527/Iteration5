@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { HelptipComponent } from './helptip/helptip.component'; 
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +6,5 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Iteration5-FE';
+  title = 'Iteration5-FrontEnd';
 }

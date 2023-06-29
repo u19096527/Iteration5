@@ -1,0 +1,74 @@
+<div class="titlePage">
+    <h4> </h4>
+    <h4 style="font-weight: bold; padding-top: 5px;">
+      <a routerLink="'/helptip'" style="text-decoration: black;">
+        <i class="far fa-arrow-alt-circle-left fa-lg" style="color: black;"></i>
+      </a>&nbsp;&nbsp;
+      <a routerLink="'/helptip'" style="color: black;">
+        HELP TIPS
+      </a>
+      <i class="fas fa-angle-right fa-lg"></i> ADD NEW HELP TIP
+    </h4>
+  </div>
+
+  <div style="padding: 50px;">
+    <div class="row"  >
+      <div class="col-6 offset-1" >
+        <form class="form-group" [formGroup]="formAddHelpTip"  (ngSubmit)="addNewHelpTip()">
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Name </label>
+            <input type="text" class="form-control" placeholder="" name="name" formControlName="name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Surname </label>
+            <input type="text" class="form-control" placeholder="" name="surname"
+              formControlName="surname">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Cell Number</label>
+            <input type="text" class="form-control" placeholder="" maxlength="10" name="cell_Number" formControlName="cell_Number">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Email</label>
+            <input type="text" class="form-control" placeholder=""  name="email" formControlName="email">
+          </div>
+          <button type="button" class="btn normButton" style="width: 140px;" data-toggle="modal"
+            data-target="#addModal"> ADD STUDENT </button>
+          <button type="button" class="btn normCancel" style="margin-left:20px;width: 140px;" data-toggle="modal"
+            data-target="#abortModal"> CANCEL </button>
+  
+  
+          <!-- Modal -->
+          <div class="modal fade" id="addModal" role="dialog" data-backdrop="false">
+            <div class="modal-dialog modal-md">
+  
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div style="background-color: #D9D9D9;height: fit-content;">
+                  <i type="button" class="close modalLabel fa fa-times-circle" data-dismiss="modal"></i>
+                </div>
+                <div class="modal-body">
+                  <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
+                    <h5>
+                      <i class="fa fa-exclamation-triangle fa-2x" style="color: #FFDB58;"></i>&nbsp;&nbsp; Are you sure
+                      you want to add this student?
+                    </h5>
+                  </div>
+                  <div style="text-align: center;margin-top: 5px;margin-bottom: 5px;">
+                    <button type="button" class="btn update" style="width: 140px;" data-dismiss="modal"
+                      data-toggle="modal" data-target="#successModal" (click)="addNewStudent()"> CONFIRM
+                    </button>
+                    <button type="button" class="btn normCancel" data-dismiss="modal"
+                      style="margin-left:20px;width: 140px;"> CANCEL </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
