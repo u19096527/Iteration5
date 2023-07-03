@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { MatToolbar } from '@angular/material/toolbar';
-
 
 @Component({
   selector: 'app-root',
@@ -8,5 +6,5 @@ import { MatToolbar } from '@angular/material/toolbar';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Iteration5-FrontEnd';
+  title = 'Iteration5-Angular';
 }
