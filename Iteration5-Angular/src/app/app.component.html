@@ -44,22 +44,23 @@
 <mat-sidenav-container autosize>
   <mat-sidenav #sidenav mode="side" opened="true" class="side-container" style="background-color: #AE7595;">
       <mat-nav-list style="float:inline-start;">
-          <a mat-list-item [routerLink]="'/dashboard'"
+          <a mat-list-item routerLink="/dashboard"
               style="float:inline-start;font-weight: bolder;vertical-align: middle;">
               <i class="fa fa-th-large fa-lg"></i>&nbsp;&nbsp; DASHBOARD
           </a>
-          <a mat-list-item [routerLink]="'/user-roles'" style="font-weight: bolder;">
+          <a mat-list-item routerLink="/help-tips" style="font-weight: bolder;">
+            <i class="fas fa-user-graduate fa-lg"></i>&nbsp;&nbsp; HELP TIPS
+          </a>
+          <a mat-list-item routerLink="/user-roles" style="font-weight: bolder;">
               <i class="fas fa-boxes fa-lg"></i>&nbsp;&nbsp; USERS
           </a>
-          <a mat-list-item [routerLink]="'/help-tips'" style="font-weight: bolder;">
-              <i class="fas fa-box-open fa-lg"></i>&nbsp;&nbsp; HELP TIPS
-          </a>
-          <a mat-list-item [routerLink]="'/vouchers'" style="font-weight: bolder;">
+          <a mat-list-item routerLink="/vouchers" style="font-weight: bolder;">
             <i class="fas fa-ticket"></i>&nbsp;&nbsp; VOUCHERS
           </a>
-          <a mat-list-item [routerLink]="'/students'" style="font-weight: bolder;">
+          <a mat-list-item routerLink="/students" style="font-weight: bolder;">
               <i class="fas fa-user-graduate fa-lg"></i>&nbsp;&nbsp; STUDENTS
           </a>
+
       </mat-nav-list>
   </mat-sidenav>
 

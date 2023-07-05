@@ -14,19 +14,19 @@ import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import { StudentsComponent } from './students/students.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
-import { HelpTipsComponent } from './help-tips/help-tips.component';
 import { UserRolesComponent } from './user-roles/user-roles.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
+import { HelpTipsComponent } from './help-tips/help-tips.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentsComponent,
     VouchersComponent,
-    HelpTipsComponent,
     UserRolesComponent,
-    DashboardComponent
+    DashboardComponent,
+    HelpTipsComponent
   ],
   imports: [
     BrowserModule,
