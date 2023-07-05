@@ -6,6 +6,7 @@ import { VouchersComponent } from './vouchers/vouchers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HelpTipsComponent } from './help-tips/help-tips.component';
+import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'user-roles', component: UserRolesComponent },
   { path: 'vouchers', component: VouchersComponent },
   { path: 'help-tips', component: HelpTipsComponent },
+  { path: 'add-helptips', component: AddHelptipsComponent },
 
 ];
 

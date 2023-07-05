@@ -1,0 +1,41 @@
+<!-- TITLE OF PAGE BAR -->
+<div class="titlePage">
+  <h4 style="font-weight: bold; padding-top: 5px;">
+    <a [routerLink]="'/help-tips'" style="color: black;">
+      HELP TIPS
+    </a>
+    &nbsp; >> &nbsp;
+    ADD NEW HELP TIP
+  </h4>
+</div>
+
+<div style="padding: 50px;">
+  <div class="row">
+    <div class="col-6 offset-1">
+      <form class="form-group" [formGroup]="formAddHelpTip" (ngSubmit)="addNewHelpTip()">
+        <div class="mb-3">
+          <label class="form-label" style="font-weight: bold;"> Name </label>
+          <input type="text" class="form-control" name="name" formControlName="name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" style="font-weight: bold;"> Description </label>
+          <input type="textarea" class="form-control" name="description" formControlName="description">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" style="font-weight: bold;"> Date </label>
+          <input id="datePicker" type="date" class="form-control" name="date" formControlName="date">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" style="font-weight: bold;"> Video </label>
+          <input id="videoInput" type="file" accept="video/mp4" class="form-control" name="video" formControlName="video">
+        </div>
+        <button type="button" class="btn normButton" style="width: 140px;" (click)="addNewHelpTip()">
+          ADD HELP VIDEO
+        </button>
+        <button type="button" class="btn normCancel" style="margin-left:20px;width: 140px;">
+          CANCEL
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

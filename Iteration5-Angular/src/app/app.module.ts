@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,8 +17,9 @@ import { StudentsComponent } from './students/students.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { UserRolesComponent } from './user-roles/user-roles.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HelpTipsComponent } from './help-tips/help-tips.component';
+import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,17 @@ import { HelpTipsComponent } from './help-tips/help-tips.component';
     VouchersComponent,
     UserRolesComponent,
     DashboardComponent,
-    HelpTipsComponent
+    HelpTipsComponent,
+    AddHelptipsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatMenuModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule, 
     FormsModule
   ],
   providers: [],
