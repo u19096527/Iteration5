@@ -14,7 +14,6 @@
     </div>
     <div class="col-md-3" style="justify-content: flex-end;text-align: right;padding-top: 10px;">
         <a [routerLink]="'/add-helptips'" class="normButton btn">
-            <mat-icon>movie</mat-icon>
             ADD NEW HELP VIDEO
         </a>
     </div>
@@ -32,15 +31,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr style="height: max-content;" >
+            <tr style="height: max-content;" *ngFor="let item of arrHelpTips">
                 <td>
-                    
+                    {{item.name}}
                 </td>
                 <td>
-                    
+                    {{item.description}}
                 </td>
                 <td>
-                   
+                   {{item.date}}
                 </td> 
                 <!-- CONTINUE EDITING FROM HERE -->
                 <td style="text-align: right;">
@@ -56,4 +55,8 @@
             </tr>
         </tbody>
     </table> 
+</div>
+
+<div>
+
 </div>

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HelpTip } from 'src/app/shared/help-tip';
 
-
 @Component({
   selector: 'app-add-helptips',
   templateUrl: './add-helptips.component.html',
@@ -12,67 +11,66 @@ import { HelpTip } from 'src/app/shared/help-tip';
 })
 export class AddHelptipsComponent {
 
-  
   constructor(private dataService: DataService, private router: Router) { }
 
-  formAddHelpTip: FormGroup = new FormGroup
-    ({
-      name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      date: new FormControl('', [Validators.required]),
-      video: new FormControl('', [Validators.required])
-    })
+  formAddHelpTip: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
+    video: new FormControl('', [Validators.required])
+  });
 
-    ngOnInit(): void {
-    }
-      
-    convertedVideo: string = "";
-    convertVideoToBase64(file: File): Promise<void> {
-      return new Promise<void>((resolve, reject) => {
-        const reader = new FileReader();
-  
-        reader.onload = () => {
-          const base64String = reader.result as string;
-          this.convertedVideo = base64String;
-          resolve();
-        };
-  
-        reader.onerror = (error) => {
-          reject(error);
-        };
-  
-        reader.readAsDataURL(file);
-      });
-    }
+  public videoUrl: string = '';
+  public base64String: string = '';
+  public file: any;
 
-    addNewHelpTip() {
-      const fileInput: HTMLInputElement | null = document.querySelector('#videoInput') as HTMLInputElement;
-      const file = fileInput.files?.[0];
+  ngOnInit(): void {}
+
+  addNewHelpTip() {
+    const fileInput = document.getElementById('videoInput') as HTMLInputElement;
+    this.file = fileInput.files && fileInput.files[0];
+  
+    const reader = new FileReader();
+    reader.readAsDataURL(this.file);
+    reader.onload = (event) => {
+      this.base64String = event.target?.result as string;
+
+      const prefixToRemove = "data:video/mp4;base64,";
+      this.base64String = this.base64String.substring(prefixToRemove.length);
+
   
       let newHelpTip = new HelpTip();
       newHelpTip.name = this.formAddHelpTip.value.name;
       newHelpTip.description = this.formAddHelpTip.value.description;
       newHelpTip.date = this.formAddHelpTip.value.date;
+      newHelpTip.video = this.base64String;
   
-      if (file) {
-        this.convertVideoToBase64(file)
-          .then(() => {
-            console.log(this.convertedVideo);
-            newHelpTip.video = this.convertedVideo;
-  
-            this.dataService.AddNewHelpTip(newHelpTip).subscribe((result) => {
-              console.log(newHelpTip);
-              console.log(result);
-              this.router.navigate(['/helptip']);
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-    }
-  
+      console.log(newHelpTip);
 
+      this.dataService.AddNewHelpTip(newHelpTip).subscribe( (response: any) => {
+        console.log("You have successfully added a help tip");
+        this.router.navigate(['/help-tips']);
+      });
+    };
+
+  }
+
+  convertBase64ToVideo(base64String: string) {
+    // Convert the base64 string to a Blob
+    const byteCharacters = atob(base64String.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'video/mp4' });
+
+    // Create an object URL from the Blob
+    this.videoUrl = URL.createObjectURL(blob);
+
+    console.log("Video URL ", this.videoUrl);
+  }
 }
 
-    
+
+

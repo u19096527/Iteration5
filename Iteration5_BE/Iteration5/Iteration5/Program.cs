@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => options.AddDefaultPolicy(
                 include =>
                 {
+                    include.AllowAnyOrigin();
                     include.AllowAnyHeader();
                     include.AllowAnyMethod();
                     include.AllowAnyOrigin();
@@ -33,6 +34,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable CORS middleware
+app.UseCors();
 
 app.UseAuthorization();
 

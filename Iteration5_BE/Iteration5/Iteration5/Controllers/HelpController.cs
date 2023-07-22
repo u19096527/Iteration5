@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Iteration5.Models;
 using Iteration5.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Cors;
 
 namespace Iteration5.Controllers
 {
@@ -80,24 +82,25 @@ namespace Iteration5.Controllers
         [Route("AddHelpTip")]
         public async Task<IActionResult> AddHelpTip(HelpTipViewModel newHelpTip)
         {
-            var helpTip = new HelpTip
-            {
-                Name = newHelpTip.Name,
-                Description = newHelpTip.Description,
-                Date = newHelpTip.Date,
-                Video = newHelpTip.Video
-            };
-
             try
             {
+                var helpTip = new HelpTip
+                {
+                    Name = newHelpTip.Name,
+                    Description = newHelpTip.Description,
+                    Date = newHelpTip.Date,
+                    Video = newHelpTip.Video
+                };
+
                 _helpTipRepository.Add(helpTip);
                 await _helpTipRepository.SaveChangesAsync();
+
+                return Ok(helpTip);
             }
             catch (Exception)
             {
                 return BadRequest("Invalid transaction");
             }
-            return Ok(helpTip);
         }
 
         // Edits details of a helpTip
