@@ -1,0 +1,52 @@
+<!-- TITLE OF PAGE BAR -->
+<div class="titlePage">
+    <h4 style="font-weight: bold; padding-top: 5px;"  [routerLink]="'/help-tips'" style="color: black;">
+        HELP TIPS
+       &nbsp; >> &nbsp;
+      ADD NEW HELP TIP
+    </h4>
+  </div>
+  
+  <div style="padding: 50px;">
+    <div class="row">
+      <div class="col-6 offset-1">
+        <form class="form-group" [formGroup]="formEditHelpTip" (ngSubmit)="editAHelpTip()">
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Name </label>
+            <input type="text" class="form-control" name="name" formControlName="name">
+          </div>
+          <div class="mb-6">
+            <label class="form-label" style="font-weight: bold;"> Description </label>
+            <textarea class="form-control" name="description" formControlName="description" style="height: 200px;"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Date </label>
+            <input id="datePicker" type="date" class="form-control" name="date" formControlName="date">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Video </label>
+            <input id="video" type="text" class="form-control" name="video" formControlName="video">
+          </div>
+  
+          <button (click)="displayVideo()" type="button" class="btn normButton" style="width: 140px;">
+            VERIFY VIDEO
+          </button>
+        </form>
+        <div *ngIf="showVideo"> 
+          <p style="text-align: center;"> Please confirm if the video below is what you want to upload </p>
+          <div class="video-container">
+            <iframe [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <br>
+          <button type="button" class="btn normButton" style="width: 150px;" (click)="editAHelpTip()">
+            EDIT HELP VIDEO
+          </button>
+          <button type="button" class="btn normCancel" style="margin-left:20px;width: 140px;">
+            CANCEL
+          </button>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

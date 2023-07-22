@@ -1,12 +1,10 @@
 <!-- TITLE OF PAGE BAR -->
 <div class="titlePage">
-  <h4 style="font-weight: bold; padding-top: 5px;">
-    <a [routerLink]="'/help-tips'" style="color: black;">
+    <p style="font-weight: bold; padding-top: 5px;" [routerLink]="'/help-tips'" style="color: black;">
       HELP TIPS
-    </a>
     &nbsp; >> &nbsp;
     ADD NEW HELP TIP
-  </h4>
+    </p>
 </div>
 
 <div style="padding: 50px;">
@@ -19,7 +17,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label" style="font-weight: bold;"> Description </label>
-          <input type="textarea" class="form-control" name="description" formControlName="description">
+          <textarea class="form-control" name="description" formControlName="description" style="height: 200px;"></textarea>
         </div>
         <div class="mb-3">
           <label class="form-label" style="font-weight: bold;"> Date </label>
@@ -27,21 +25,27 @@
         </div>
         <div class="mb-3">
           <label class="form-label" style="font-weight: bold;"> Video </label>
-          <input id="videoInput" type="file" accept="video/mp4" class="form-control" name="video" formControlName="video">
+          <input id="video" type="text" class="form-control" name="video" formControlName="video">
         </div>
-        <button type="button" class="btn normButton" style="width: 140px;" (click)="addNewHelpTip()">
+
+        <button (click)="playVideo()" type="button" class="btn normButton" style="width: 140px;">
+          VERIFY VIDEO
+        </button>
+      </form>
+      <div *ngIf="showVideo"> 
+        <p> Please confirm if the video below is what you want to upload </p>
+        <div class="video-container">
+          <iframe [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <br>
+        <button type="button" class="btn normButton" style="width: 150px;" (click)="addNewHelpTip()">
           ADD HELP VIDEO
         </button>
         <button type="button" class="btn normCancel" style="margin-left:20px;width: 140px;">
           CANCEL
         </button>
-      </form>
+
+      </div>
     </div>
   </div>
-</div>
-
-<div>
-  <video controls [src]="videoUrl">
-    Your browser does not support the video tag.
-  </video>
 </div>

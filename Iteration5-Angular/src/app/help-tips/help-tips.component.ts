@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HelpTip } from '../shared/help-tip';
 import { DataService } from '../services/data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,16 +11,16 @@ import { DataService } from '../services/data.service';
 })
 export class HelpTipsComponent implements OnInit {
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private router: Router) {}
   arrHelpTips: HelpTip[] = [];
 
   ngOnInit(): void {
     this.getAllHelpTips()
-    console.log(this.arrHelpTips)
   }
 
   //Get All the Help Tips
   getAllHelpTips(){
+    this.arrHelpTips = [];
     this.dataService.GetAllTheHelpTips().subscribe( result => {
       let listHelpTips: any[] = result;
       listHelpTips.forEach( (element) => {
@@ -31,9 +32,9 @@ export class HelpTipsComponent implements OnInit {
   // Search Help Tips
   searchQuery: string ="";
     searchHelpTip() {
-      if (this.searchQuery.trim() === "") {
-        window.location.reload();
+      if (this.searchQuery == "") {
         this.getAllHelpTips();
+        console.log("searchbar empty");
       }
       else {
         this.dataService.SearchHelpTips(this.searchQuery).subscribe(
@@ -43,8 +44,24 @@ export class HelpTipsComponent implements OnInit {
             listHelpTips.forEach( (element) => {
               this.arrHelpTips.push(element);
             });
+            console.log("retrieving search results");
           }
         );
       }
     }
+
+    goToViewHelpTip(help_ID: number) {
+      this.router.navigate(['/view-helptip', help_ID]);
+    }
+
+    goToEditHelpTip(help_ID: number) {
+      this.router.navigate(['/edit-helptip', help_ID]);
+    }
+    deleteHelpTip(help_ID: number){
+      this.dataService.DeleteHelpTip(help_ID).subscribe( (response:any) => {
+        window.location.reload();
+      })
+      window.onload;
+    }
+
 }

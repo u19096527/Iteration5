@@ -20,6 +20,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HelpTipsComponent } from './help-tips/help-tips.component';
 import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ViewHelptipComponent } from './help-tips/view-helptip/view-helptip.component';
+import { EditHelptipComponent } from './help-tips/edit-helptip/edit-helptip.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.comp
     UserRolesComponent,
     DashboardComponent,
     HelpTipsComponent,
-    AddHelptipsComponent
+    AddHelptipsComponent,
+    ViewHelptipComponent,
+    EditHelptipComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,8 @@ import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.comp
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule, 
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
