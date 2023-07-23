@@ -22,6 +22,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(
 //Services 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IHelpTipRepository, HelpTipRepository>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
 
 var app = builder.Build();

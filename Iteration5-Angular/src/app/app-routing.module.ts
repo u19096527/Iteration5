@@ -9,6 +9,8 @@ import { HelpTipsComponent } from './help-tips/help-tips.component';
 import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.component';
 import { EditHelptipComponent } from './help-tips/edit-helptip/edit-helptip.component';
 import { ViewHelptipComponent } from './help-tips/view-helptip/view-helptip.component';
+import { EditUserroleComponent } from './user-roles/edit-userrole/edit-userrole.component';
+import { AddUserroleComponent } from './user-roles/add-userrole/add-userrole.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path: 'help-tips', component: HelpTipsComponent },
   { path: 'add-helptips', component: AddHelptipsComponent },
   { path: 'edit-helptip/:id', component: EditHelptipComponent },
-  { path: 'view-helptip/:id', component: ViewHelptipComponent }
+  { path: 'view-helptip/:id', component: ViewHelptipComponent },
+  { path: 'add-userrole', component: AddUserroleComponent },
+  { path: 'edit-userrole/:id', component: EditUserroleComponent },
 
 ];
 

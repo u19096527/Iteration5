@@ -4,3 +4,49 @@
         USERS
     </h4>
 </div>
+<!-- SEARCH BAR AND ADD NEW USER ROLE BUTTON -->
+<div class="row" style="padding-left: 15px;padding-right: 15px;">
+    <div class="col-md-9">
+        <form >
+            <input type="search" placeholder="Search for a user role" name="searchQuery" (input)="searchUserRole()" [(ngModel)]="searchQuery" >
+        </form>     
+    </div>
+    <div class="col-md-3" style="justify-content: flex-end;text-align: right;padding-top: 10px;">
+        <a [routerLink]="'/add-userrole'" class="normButton btn">
+            ADD NEW USER ROLE
+        </a>
+    </div>
+</div>
+
+<!-- TABLE OF HELP TIPS -->
+<div style="padding-left: 15px;padding-right: 15px;padding-top: 15px;">
+    <table class="table table-inverse datatable-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of arrUserRoles" style="width: 100">
+                <td>
+                    {{item.name}}
+                </td>
+                <td>
+                    {{item.description}}
+                </td>
+                <td>
+                    <button class="btn update" (click)="goToEditUserRole(item.userrole_ID)" >
+                        <i class="fa fa-edit"></i> &nbsp;
+                            EDIT 
+                    </button> &nbsp;
+                    <button class="btn delete" style="margin-left: 4px;" (click)="deleteUserRole(item.userrole_ID)">
+                        <i class="fa fa-trash"></i>&nbsp;&nbsp; 
+                        DELETE 
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table> 
+</div>

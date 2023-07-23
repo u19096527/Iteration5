@@ -23,6 +23,8 @@ import { AddHelptipsComponent } from './help-tips/add-helptips/add-helptips.comp
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ViewHelptipComponent } from './help-tips/view-helptip/view-helptip.component';
 import { EditHelptipComponent } from './help-tips/edit-helptip/edit-helptip.component';
+import { AddUserroleComponent } from './user-roles/add-userrole/add-userrole.component';
+import { EditUserroleComponent } from './user-roles/edit-userrole/edit-userrole.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { EditHelptipComponent } from './help-tips/edit-helptip/edit-helptip.comp
     HelpTipsComponent,
     AddHelptipsComponent,
     ViewHelptipComponent,
-    EditHelptipComponent
+    EditHelptipComponent,
+    AddUserroleComponent,
+    EditUserroleComponent
   ],
   imports: [
     BrowserModule,

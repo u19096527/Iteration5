@@ -48,4 +48,28 @@ export class DataService {
     return this.httpClient.get<any>(`${this.apiUrl}Help/GetSearchedHelpTip/${enteredQuery}`).pipe( map( result => result));
   }
 
+  // USER ROLES
+  GetAllTheUserRoles(): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}Help/GetAllUserRoles`).pipe( map( result => result) )
+  }
+
+  AddNewUserRole(newUserRole: UserRole) {
+    return this.httpClient.post(this.apiUrl + `Help/AddUserRole`, newUserRole);
+  }
+
+  UpdateAUserRole(userrole_ID: number, updatedUserRole: UserRole){
+    return this.httpClient.put(this.apiUrl + `Help/EditUserRole/${userrole_ID}`, updatedUserRole);
+  }
+
+  DeleteUserRole( userrole_ID: number){
+    return this.httpClient.delete(this.apiUrl + `Help/DeleteUserRole/${userrole_ID}`);
+  }
+
+  GetSelectedUserRole(userrole_ID: number){
+    return this.httpClient.get(this.apiUrl + `Help/GetAUserRole/${userrole_ID}`);
+  }
+
+  SearchUserRoles(enteredQuery: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.apiUrl}Help/GetSearchedUserRole/${enteredQuery}`).pipe( map( result => result));
+  }
 }

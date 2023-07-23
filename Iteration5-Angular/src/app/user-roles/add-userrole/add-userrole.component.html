@@ -1,0 +1,34 @@
+<!-- TITLE OF PAGE BAR -->
+<div class="titlePage">
+    <p style="font-weight: bold; padding-top: 5px;" [routerLink]="'/help-tips'" style="color: black;">
+      USERS
+    &nbsp; >> &nbsp;
+    ADD NEW USER ROLE
+    </p>
+</div>
+
+<div style="padding: 50px;">
+  <div class="row">
+    <div class="col-6 offset-1">
+      <form class="form-group" [formGroup]="formAddUserRole" (ngSubmit)="addNewUserRole()">
+        <div class="mb-3">
+          <label class="form-label" style="font-weight: bold;"> Name </label>
+          <input type="text" class="form-control" name="name" formControlName="name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" style="font-weight: bold;"> Description </label>
+          <textarea class="form-control" name="description" formControlName="description" style="height: 100px;"></textarea>
+        </div>
+        <div class="mb-3">
+            <button type="button" class="btn normButton" style="width: 150px;" (click)="addNewUserRole()">
+                ADD USER ROLE
+              </button>
+              <button type="button" class="btn normCancel" style="margin-left:20px;width: 140px;">
+                CANCEL
+              </button>    
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

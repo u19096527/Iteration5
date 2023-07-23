@@ -9,5 +9,7 @@ namespace Iteration5.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<HelpTip> HelpTips { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+
     }
 }

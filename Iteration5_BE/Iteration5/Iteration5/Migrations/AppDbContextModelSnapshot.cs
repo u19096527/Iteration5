@@ -49,6 +49,27 @@ namespace Iteration5.Migrations
 
                     b.ToTable("HelpTips");
                 });
+
+            modelBuilder.Entity("Iteration5.Models.UserRole", b =>
+                {
+                    b.Property<int>("UserRole_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRole_ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserRole_ID");
+
+                    b.ToTable("UserRoles");
+                });
 #pragma warning restore 612, 618
         }
     }
