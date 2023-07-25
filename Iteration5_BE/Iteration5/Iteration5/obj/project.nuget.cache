@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "CXiUpheExQtXaKgMf9yB02j807OxQOe3HAaRa3J7U9Dc1b96MASxJvCdGpyLQnyffCIhDAWzmfUvCxlP0Yv+yg==",
+  "dgSpecHash": "n/tlLGw/9huBXPfY9XcfzL73taX6r2HKfqfneiU8FWBY2waBvS79sY21qTvHCdDcMIOwUpomCZ96H54/kJr7tA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Wisani\\Documents\\GitHub\\Iteration5\\Iteration5_BE\\Iteration5\\Iteration5\\Iteration5.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Wisani\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
+    "C:\\Users\\Wisani\\.nuget\\packages\\azure.core\\1.33.0\\azure.core.1.33.0.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Wisani\\.nuget\\packages\\azure.storage.blobs\\12.17.0\\azure.storage.blobs.12.17.0.nupkg.sha512",
+    "C:\\Users\\Wisani\\.nuget\\packages\\azure.storage.common\\12.16.0\\azure.storage.common.12.16.0.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
@@ -180,6 +182,7 @@
     "C:\\Users\\Wisani\\.nuget\\packages\\system.io.compression.zipfile\\4.3.0\\system.io.compression.zipfile.4.3.0.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\Wisani\\.nuget\\packages\\system.io.hashing\\6.0.0\\system.io.hashing.6.0.0.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\Wisani\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
