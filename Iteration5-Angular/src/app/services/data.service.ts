@@ -8,6 +8,8 @@ import { Student } from '../shared/student';
 import { Voucher } from '../shared/voucher';
 import { UserRole } from '../shared/user-role';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,6 +32,16 @@ export class DataService {
 
   AddNewHelpTip(newHelpTip: HelpTip) {
     return this.httpClient.post(this.apiUrl + `Help/AddHelpTip`, newHelpTip);
+  }
+
+  AddABlob(model: HelpTip): Observable<any> {
+    // const formData = new FormData();
+    // formData.append('videoFile', model.videoFile, model.videoFile.name); // Set the file name and content type
+    // formData.append('name', model.name);
+    // formData.append('description', model.description);
+    // formData.append('date', model.date);
+
+    return this.httpClient.post(this.apiUrl + 'BlobExplorer/Post', model , { responseType: 'text' });
   }
 
   UpdateAHelpTip(Help_ID: number, updatedHelpTip: HelpTip){

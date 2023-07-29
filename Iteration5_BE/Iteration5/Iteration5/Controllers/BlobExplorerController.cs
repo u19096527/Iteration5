@@ -18,10 +18,13 @@ namespace Iteration5.Controllers
     public class BlobExplorerController : ControllerBase
     {
         private readonly IBlobRepository _blobRepository;
+        private readonly ILogger<BlobExplorerController> _logger;
 
-        public BlobExplorerController(IBlobRepository blobRepository)
+        public BlobExplorerController(IBlobRepository blobRepository, ILogger<BlobExplorerController> logger)
         {
             _blobRepository = blobRepository;
+            _logger = logger;
+
         }
 
         [HttpGet]
@@ -32,25 +35,117 @@ namespace Iteration5.Controllers
             return File(result.Content, result.ContentType);
         }
 
-        [HttpPost("UploadBlobFile")]
-        public async Task<IActionResult> UploadBlobFile([FromBody] BlobContentModel model)
-        {
-            var result = await _blobRepository.UploadBlobFile(model.Filepath, model.FileName);
-            return Ok(result);
-        }
-
-        [HttpDelete("DeleteBlob")]
+        //[HttpPost]
+        //[Route("UploadBlobFile")]
+        //public async Task<IActionResult> UploadBlobFile([FromBody] BlobContentModel model)
+        //{
+        //    var result = await _blobRepository.UploadBlobFile(model.Filepath, model.FileName);
+        //    return Ok(result);
+        //}
+            
+        [HttpDelete]
+        [Route("DeleteBlob")]
         public IActionResult DeleteBlob(string path)
         {
             _blobRepository.DeleteBlob(path);
             return Ok();
         }
 
-        [HttpGet("ListBlobs")]
+        [HttpGet]
+        [Route("ListBlobs")]
         public async Task<IActionResult> ListBlobs()
         {
             var result = await _blobRepository.ListBlobs();
             return Ok(result);
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadVideo(HelpTipViewModel htViewModel)
+        {
+
+            if (htViewModel.VideoFile == null || htViewModel.VideoFile.Length == 0)
+            return BadRequest("No file uploaded.");
+
+            // Check if the file is a video
+            if (!htViewModel.VideoFile.ContentType.StartsWith("video/mp4"))
+                return BadRequest("Only video files are allowed.");
+
+            // Convert the video file to a byte array
+            byte[] fileData;
+            using (var memoryStream = new MemoryStream())
+            {
+                await htViewModel.VideoFile.CopyToAsync(memoryStream);
+                fileData = memoryStream.ToArray();
+            }
+
+            try
+            {
+                string containerName = "blobcontainerhelptip"; // Replace with your container name
+                string fileName = htViewModel.FileName; // You may want to generate a unique name for the file
+
+                // Upload the video file to Blob storage using the BlobRepository
+                string blobUrl = await _blobRepository.UploadBlobFile(fileName, fileData);
+
+                return Ok($"Video uploaded successfully. Blob URL: {blobUrl}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error uploading video: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        [Route("Post")]
+        public async Task<IActionResult> Post([FromForm] HelpTipViewModel htViewModel)
+        {
+            _logger.LogInformation($"Received form data: Name: {htViewModel.Name}, Description: {htViewModel.Description}, Date: {htViewModel.Date}");
+            // Access the form data fields
+            //var name = form["name"];
+            //var description = form["description"];
+            //var date = form["date"];
+            //var video = form["video"];
+            //var filePath = form["filePath"];
+            //var fileName = form["fileName"];
+
+            var name = htViewModel.Name;
+            var description = htViewModel.Description;
+            var date = htViewModel.Date;
+            var video = htViewModel.Video;
+            //var filePath = htViewModel.FilePath;
+            //var fileName = htViewModel.FileName;
+
+            // Process the uploaded file(s)
+            var file = htViewModel.VideoFile;
+
+            try
+            {
+                if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+
+                if (file != null && file.Length > 0)
+                {
+                    byte[] fileData;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(memoryStream);
+                        fileData = memoryStream.ToArray();
+                    }
+
+                    string containerName = "blobcontainerhelptip"; // Replace with your container name
+                    string fileName = file.FileName; // You may want to generate a unique name for the file
+
+                    // Upload the video file to Blob storage using the BlobRepository
+                    string blobUrl = await _blobRepository.UploadBlobFile(fileName, fileData);
+
+                    return Ok($"Video uploaded successfully. Blob URL: {blobUrl}");
+                }
+                // Perform your desired logic with the received data
+                return Ok("Data received successfully! "+name + description + date );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error uploading video: {ex.Message}");
+            }
         }
     }
 }

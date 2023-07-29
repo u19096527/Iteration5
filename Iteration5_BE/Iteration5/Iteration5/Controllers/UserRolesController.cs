@@ -11,6 +11,7 @@ using System.IO;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 
 namespace Iteration5.Controllers
 {
@@ -19,6 +20,8 @@ namespace Iteration5.Controllers
     public class UserRolesController : ControllerBase
     {
         private readonly IUserRoleRepository _userRoleRepository;
+        private RoleManager<IdentityRole> _roleManager;
+        private UserManager<AppUser> userManager;
 
         public UserRolesController(IUserRoleRepository userRoleRepository)
         {
@@ -95,7 +98,6 @@ namespace Iteration5.Controllers
 
                 _userRoleRepository.Add(UserRole);
                 await _userRoleRepository.SaveChangesAsync();
-
                 return Ok(UserRole);
             }
             catch (Exception)

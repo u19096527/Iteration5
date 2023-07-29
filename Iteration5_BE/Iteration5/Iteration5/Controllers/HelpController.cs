@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Http;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Cors;
+using Iteration5.Controllers;
+using Azure;
+using Azure.Storage.Blobs;
+using System.Configuration;
+using Microsoft.Net.Http.Headers;
 
 namespace Iteration5.Controllers
 {
@@ -16,10 +21,16 @@ namespace Iteration5.Controllers
     {
 
         private readonly IHelpTipRepository _helpTipRepository;
+        private readonly IBlobRepository _blobRepository;
 
-        public HelpController(IHelpTipRepository helpTipRepository)
+        private readonly IConfiguration _configuration;
+
+        public HelpController(IHelpTipRepository helpTipRepository, IBlobRepository blobRepository, IConfiguration configuration)
         {
             _helpTipRepository = helpTipRepository;
+            _blobRepository = blobRepository;
+            _configuration = configuration;
+
         }
 
         // Retrieves all the help tips
@@ -84,18 +95,23 @@ namespace Iteration5.Controllers
         {
             try
             {
+                //var blobStorageURL = await _blobRepository.UploadBlobFile(newHelpTip.FileName, newHelpTip.FilePath);
+
+
                 var helpTip = new HelpTip
                 {
                     Name = newHelpTip.Name,
                     Description = newHelpTip.Description,
                     Date = newHelpTip.Date,
-                    Video = newHelpTip.Video
+                    Video = "",
+                    FilePath = newHelpTip.FilePath,
+                    FileName = newHelpTip.FileName
                 };
 
                 _helpTipRepository.Add(helpTip);
                 await _helpTipRepository.SaveChangesAsync();
-
                 return Ok(helpTip);
+
             }
             catch (Exception)
             {
@@ -146,6 +162,7 @@ namespace Iteration5.Controllers
                     return NotFound($"The help tip does not exist");
                 }
 
+                _blobRepository.DeleteBlob(existingHelpTip.FileName);
                 _helpTipRepository.Delete(existingHelpTip);
 
                 if (await _helpTipRepository.SaveChangesAsync())
@@ -159,6 +176,41 @@ namespace Iteration5.Controllers
             }
             return BadRequest("Your request is invalid");
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadVideo(HelpTipViewModel htViewModel)
+        {
+            if (htViewModel.VideoFile == null || htViewModel.VideoFile.Length == 0)
+                return BadRequest("No file uploaded.");
+
+            // Check if the file is a video
+            if (!htViewModel.VideoFile.ContentType.StartsWith("video/mp4"))
+                return BadRequest("Only video files are allowed.");
+
+            // Convert the video file to a byte array
+            byte[] fileData;
+            using (var memoryStream = new MemoryStream())
+            {
+                await htViewModel.VideoFile.CopyToAsync(memoryStream);
+                fileData = memoryStream.ToArray();
+            }
+
+            try
+            {
+                string containerName = "blobcontainerhelptip"; // Replace with your container name
+                string fileName = htViewModel.FileName; // You may want to generate a unique name for the file
+
+                // Upload the video file to Blob storage using the BlobRepository
+                string blobUrl = await _blobRepository.UploadBlobFile(fileName, fileData);
+
+                return Ok($"Video uploaded successfully. Blob URL: {blobUrl}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error uploading video: {ex.Message}");
+            }
+        }
+
 
     }
 }

@@ -14,5 +14,12 @@ namespace Iteration5.Models
         public string Date { get; set; }
         [Required]
         public string Video { get; set; }
+        public string FilePath { get; set; }
+        public string FileName { get; set; }
+    }
+
+    public class FileModel
+    {
+        public IFormFile ImageFile { get; set; }
     }
 }

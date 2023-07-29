@@ -40,10 +40,10 @@ export class EditHelptipComponent {
         this.editedHelpTip = response as HelpTip;
 
         //place retrieved data in cells
-        this.formEditHelpTip.controls['name'].setValue(this.editedHelpTip.name);
-        this.formEditHelpTip.controls['date'].setValue(this.editedHelpTip.date);
-        this.formEditHelpTip.controls['description'].setValue(this.editedHelpTip.description);
-        this.formEditHelpTip.controls['video'].setValue(this.editedHelpTip.video);
+        this.formEditHelpTip.controls['name'].setValue(this.editedHelpTip.Name);
+        this.formEditHelpTip.controls['date'].setValue(this.editedHelpTip.Date);
+        this.formEditHelpTip.controls['description'].setValue(this.editedHelpTip.Description);
+        this.formEditHelpTip.controls['video'].setValue(this.editedHelpTip.Video);
 
       })
 
@@ -54,10 +54,10 @@ export class EditHelptipComponent {
   editAHelpTip()
   {
     let selectedHelpTip = new HelpTip();
-    selectedHelpTip.name = this.formEditHelpTip.value.name;
-    selectedHelpTip.description = this.formEditHelpTip.value.description
-    selectedHelpTip.date = this.formEditHelpTip.value.date;
-    selectedHelpTip.video = this.formEditHelpTip.value.video;
+    selectedHelpTip.Name = this.formEditHelpTip.value.name;
+    selectedHelpTip.Description = this.formEditHelpTip.value.description
+    selectedHelpTip.Date = this.formEditHelpTip.value.date;
+    selectedHelpTip.Video = this.formEditHelpTip.value.video;
 
    this.dataService.UpdateAHelpTip(this.editedHelpTip.help_ID, selectedHelpTip).subscribe((response:any) => {
       this.router.navigate(['/help-tips'])

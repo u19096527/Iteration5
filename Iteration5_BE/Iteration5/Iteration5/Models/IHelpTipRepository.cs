@@ -11,5 +11,10 @@
         Task<HelpTip> GetAHelpTipAsync(int Help_ID);
 
         Task<HelpTip[]> GetSearchedHelpTipAsync(string enteredQuery);
+
+        Task<BlobObject> GetBlobFile(string name);
+        Task<string> UploadBlobFile(string filePath, string filename);
+        void DeleteBlob(string name);
+        Task<List<string>> ListBlobs();
     }
 }

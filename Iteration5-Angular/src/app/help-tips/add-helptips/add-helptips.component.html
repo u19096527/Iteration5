@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label" style="font-weight: bold;"> Video </label>
-          <input id="video" type="text" class="form-control" name="video" formControlName="video">
+          <input id="video" type="file" class="form-control" name="video" formControlName="video">
         </div>
 
         <button (click)="playVideo()" type="button" class="btn normButton" style="width: 140px;">
@@ -46,6 +46,11 @@
         </button>
 
       </div>
+
+      <h1>Upload Video</h1>
+      <input type="file" (change)="uploadVideo($event)" accept="video/*">
+
+
     </div>
   </div>
 </div>
