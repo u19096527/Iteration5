@@ -19,12 +19,14 @@ namespace Iteration5.Controllers
     {
         private readonly IBlobRepository _blobRepository;
         private readonly ILogger<BlobExplorerController> _logger;
+        private readonly IHelpTipRepository _helpTipRepository;
 
-        public BlobExplorerController(IBlobRepository blobRepository, ILogger<BlobExplorerController> logger)
+
+        public BlobExplorerController(IBlobRepository blobRepository, ILogger<BlobExplorerController> logger, IHelpTipRepository helpTipRepository)
         {
             _blobRepository = blobRepository;
             _logger = logger;
-
+            _helpTipRepository = helpTipRepository;
         }
 
         [HttpGet]
@@ -99,21 +101,6 @@ namespace Iteration5.Controllers
         public async Task<IActionResult> Post([FromForm] HelpTipViewModel htViewModel)
         {
             _logger.LogInformation($"Received form data: Name: {htViewModel.Name}, Description: {htViewModel.Description}, Date: {htViewModel.Date}");
-            // Access the form data fields
-            //var name = form["name"];
-            //var description = form["description"];
-            //var date = form["date"];
-            //var video = form["video"];
-            //var filePath = form["filePath"];
-            //var fileName = form["fileName"];
-
-            var name = htViewModel.Name;
-            var description = htViewModel.Description;
-            var date = htViewModel.Date;
-            var video = htViewModel.Video;
-            //var filePath = htViewModel.FilePath;
-            //var fileName = htViewModel.FileName;
-
             // Process the uploaded file(s)
             var file = htViewModel.VideoFile;
 
@@ -136,11 +123,24 @@ namespace Iteration5.Controllers
 
                     // Upload the video file to Blob storage using the BlobRepository
                     string blobUrl = await _blobRepository.UploadBlobFile(fileName, fileData);
+                    var filePath = blobUrl;
 
-                    return Ok($"Video uploaded successfully. Blob URL: {blobUrl}");
+                    var helpTip = new HelpTip
+                    {
+                        Name = htViewModel.Name,
+                        Description = htViewModel.Description,
+                        Date = htViewModel.Date,
+                        FilePath = filePath,
+                        FileName = fileName,
+                    };
+
+                    _helpTipRepository.Add(helpTip);
+                    await _helpTipRepository.SaveChangesAsync();
+
+                    return Ok(helpTip);
                 }
                 // Perform your desired logic with the received data
-                return Ok("Data received successfully! "+name + description + date );
+                return Ok("Data received successfully!");
             }
             catch (Exception ex)
             {

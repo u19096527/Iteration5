@@ -35,13 +35,8 @@ export class DataService {
   }
 
   AddABlob(model: HelpTip): Observable<any> {
-    // const formData = new FormData();
-    // formData.append('videoFile', model.videoFile, model.videoFile.name); // Set the file name and content type
-    // formData.append('name', model.name);
-    // formData.append('description', model.description);
-    // formData.append('date', model.date);
-
-    return this.httpClient.post(this.apiUrl + 'BlobExplorer/Post', model , { responseType: 'text' });
+    //{ responseType: 'text' }
+    return this.httpClient.post(this.apiUrl + 'BlobExplorer/Post', model );
   }
 
   UpdateAHelpTip(Help_ID: number, updatedHelpTip: HelpTip){

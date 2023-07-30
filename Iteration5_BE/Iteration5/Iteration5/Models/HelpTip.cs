@@ -12,8 +12,8 @@ namespace Iteration5.Models
         public string Description { get; set; }
         [Required]
         public string Date { get; set; }
-        [Required]
-        public string Video { get; set; }
+        //[Required]
+        //public string Video { get; set; }
         public string FilePath { get; set; }
         public string FileName { get; set; }
     }

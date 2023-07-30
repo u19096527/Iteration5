@@ -103,7 +103,6 @@ namespace Iteration5.Controllers
                     Name = newHelpTip.Name,
                     Description = newHelpTip.Description,
                     Date = newHelpTip.Date,
-                    Video = "",
                     FilePath = newHelpTip.FilePath,
                     FileName = newHelpTip.FileName
                 };
@@ -135,7 +134,7 @@ namespace Iteration5.Controllers
                 existingHelpTip.Name = helpTipModel.Name;
                 existingHelpTip.Description = helpTipModel.Description;
                 existingHelpTip.Date = helpTipModel.Date;
-                existingHelpTip.Video = helpTipModel.Video;
+                existingHelpTip.FileName = helpTipModel.FileName;
 
                 if (await _helpTipRepository.SaveChangesAsync())
                 {

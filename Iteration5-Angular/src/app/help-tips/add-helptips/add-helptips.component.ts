@@ -3,10 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HelpTip } from 'src/app/shared/help-tip';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { HttpClient, HttpEventType, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, OnInit, Output } from '@angular/core';
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // Import DomSanitizer
 
 
 @Component({
@@ -14,21 +11,14 @@ import { EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './add-helptips.component.html',
   styleUrls: ['./add-helptips.component.scss']
 })
+
 export class AddHelptipsComponent {
 
-  progress!: number;
-  message!: string;
-  @Output() public onUploadFinished = new EventEmitter();
+  constructor(private dataService: DataService, private router: Router, private sanitizer: DomSanitizer) { 
 
-  // public videoUrl: string = '';
-  public file: any;
-  public showVideo: boolean = false;
-  public fileToUpload!: File;
-  selectedFile!: File | null;
+  }
+  videoUrl: SafeResourceUrl | undefined;
 
-  videoUrl!: SafeResourceUrl;
-
-  constructor(private dataService: DataService, private router: Router, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   formAddHelpTip: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -37,95 +27,81 @@ export class AddHelptipsComponent {
     video: new FormControl('', [Validators.required])
   });
 
-  ngOnInit(): void {}
 
-  // addNewHelpTip() {  
-  //     let newHelpTip = new HelpTip();
-  //     newHelpTip.name = this.formAddHelpTip.value.name;
-  //     newHelpTip.description = this.formAddHelpTip.value.description;
-  //     newHelpTip.date = this.formAddHelpTip.value.date;
+  // public videoUrl: string = '';
+  public showVideo: boolean = false;
 
-  //     newHelpTip.video = '';
-  //     newHelpTip.fileName = this.fileName;
-
-  //     this.filePath = this.filePath.substr("blob:".length);
-  //     console.log(this.filePath);
-  //     newHelpTip.filePath = this.filePath;
-
-  
-  //     this.dataService.AddNewHelpTip(newHelpTip).subscribe( (response: any) => {
-  //       this.router.navigate(['/help-tips']);
-  //       console.log(response);
-  //     });
-  // }
-
-  playVideo( ) {
-    this.showVideo = true;
+  ngOnInit(): void {
+    this.setCookie('my_cookie', 'my_value', { sameSite: 'none', secure: true });
   }
+
+  setCookie(name: string, value: string, options: { [key: string]: any } = {}): void {
+    let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+    for (const optionKey in options) {
+      if (options.hasOwnProperty(optionKey)) {
+        cookieString += `; ${optionKey}`;
+        const optionValue = options[optionKey];
+        if (optionValue !== true) {
+          cookieString += `=${optionValue}`;
+        }
+      }
+    }
+    document.cookie = cookieString;
+  }
+
+  VerifyVideo() {
+    this.showVideo = true;
+    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.formAddHelpTip.value.video);
+  }
+  
+  getEmbeddedVideoUrl(): SafeResourceUrl {
+    if (this.videoUrl) {
+      const videoId = this.getVideoIdFromUrl(this.videoUrl.toString());
+      if (videoId) {
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+      }
+    }
+    // Return an empty SafeResourceUrl if videoUrl is not available or invalid
+    return this.sanitizer.bypassSecurityTrustResourceUrl('');
+  }
+  getVideoIdFromUrl(url: string): string | null {
+    const pattern1 = /(?:\?v=|&v=|youtu\.be\/)([^&\n?#]+)/;
+    const pattern2 = /^https?:\/\/(?:www\.)?youtube\.com\/embed\/([^\/]+)/;
+    
+    // Check for the first pattern: https://www.youtube.com/watch?v=4nIFJFgH99w
+    let match = url.match(pattern1);
+    if (match && match[1]) {
+      return match[1];
+    }
+  
+    // Check for the second pattern: https://youtu.be/4nIFJFgH99w
+    match = url.match(pattern2);
+    if (match && match[1]) {
+      return match[1];
+    }
+  
+    // Return null if no match is found
+    return null;
+  }
+  
 
   addNewHelpTip() {
-    const formData = new FormData();
-    formData.append('Name', this.formAddHelpTip.value.name);
-    formData.append('Description', this.formAddHelpTip.value.description);
-    formData.append('Date', this.formAddHelpTip.value.date);
-    formData.append('VideoFile', this.formAddHelpTip.value.video);
+    let newHelpTip = new HelpTip();
+    newHelpTip.Name = this.formAddHelpTip.value.name;
+      newHelpTip.Description = this.formAddHelpTip.value.description;
+      newHelpTip.Date = this.formAddHelpTip.value.date;
+      newHelpTip.Video = this.formAddHelpTip.value.video;
 
-    this.http.post('https://localhost:7135/api/Help/upload', formData).subscribe(
-      () => {
-        console.log('File uploaded successfully.');
-      },
-      (error: any) => {
-        console.error('Error uploading the file:', error);
-      }
-    );
-
-
+      this.dataService.AddNewHelpTip(newHelpTip).subscribe(
+        result => {
+          this.router.navigate(['/helptips'])
+        }
+      );
   }
 
-  uploadVideo(event: Event) {
-    const fileInput = (event.target as HTMLInputElement);
-    const file = fileInput?.files?.[0];
-    this.selectedFile = fileInput?.files?.[0] || null;
-  
-    if (!file) {
-      alert('Please select a video file.');
-      return;
-    }
-  
-    if (!file.type.startsWith('video/mp4')) {
-      alert('Only video files are allowed.');
-      return;
-    }
-
-    const model: HelpTip = {
-      help_ID: 0,
-      Name: this.formAddHelpTip.value.name, // Replace with the actual name input value
-      Description: this.formAddHelpTip.value.description, // Replace with the actual description input value
-      Date: this.formAddHelpTip.value.date,
-      Video: '',
-      FilePath: '',
-      FileName: '',
-      VideoFile: file,
-    };
-
-    console.log('model:', model)
-    this.dataService.AddABlob(model).subscribe(
-      () => {
-        alert('Video uploaded successfully.');
-      },
-      (error) => {
-        alert(`There is an error uploading video: ${error.message}`);
-      }
-    );
-
-
-
-    
-  
-  }
-
-  
 }
+
 
 
 
