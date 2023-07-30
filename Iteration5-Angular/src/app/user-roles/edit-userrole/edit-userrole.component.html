@@ -1,1 +1,32 @@
-<p>edit-userrole works!</p>
+<!-- TITLE OF PAGE BAR -->
+<div class="titlePage">
+    <h4 style="font-weight: bold; padding-top: 5px;"  [routerLink]="'/help-tips'" style="color: black;">
+        USERS
+       &nbsp; >> &nbsp;
+      ADD NEW USER USER ROLE
+    </h4>
+  </div>
+  
+  <div style="padding: 50px;">
+    <div class="row">
+      <div class="col-6 offset-1">
+        <form class="form-group" [formGroup]="formEditUserRole" (ngSubmit)="editAUserRole()">
+          <div class="mb-3">
+            <label class="form-label" style="font-weight: bold;"> Name </label>
+            <input type="text" class="form-control" name="name" formControlName="name">
+          </div>
+          <div class="mb-6">
+            <label class="form-label" style="font-weight: bold;"> Description </label>
+            <textarea class="form-control" name="description" formControlName="description" style="height: 200px;"></textarea>
+          </div>
+          <button type="button" class="btn normButton" style="width: 150px;" (click)="editAUserRole()">
+            EDIT USER ROLE
+          </button>
+          <button type="button" class="btn normCancel" style="margin-left:20px;width: 140px;">
+            CANCEL
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
