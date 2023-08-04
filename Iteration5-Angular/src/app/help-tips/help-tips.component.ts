@@ -3,6 +3,8 @@ import { HelpTip } from '../shared/help-tip';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
 
+import { AzureBlobStorageService } from '../services/azure-blob-storage.service';
+
 
 @Component({
   selector: 'app-help-tips',
@@ -11,12 +13,20 @@ import { Router } from '@angular/router';
 })
 export class HelpTipsComponent implements OnInit {
 
-  constructor(private dataService: DataService, private router: Router) {}
+  constructor(private dataService: DataService, private router: Router, private azureBlobService: AzureBlobStorageService) {}
   arrHelpTips: HelpTip[] = [];
+  videoList: string[] = [];
 
   ngOnInit(): void {
     this.getAllHelpTips()
     console.log(this.arrHelpTips)
+    this.reloadVideosFromBlob();
+  }
+
+  private reloadVideosFromBlob() {
+    this.azureBlobService.listVideos().then( list => {
+      this.videoList = list
+    })
   }
 
   //Get All the Help Tips
