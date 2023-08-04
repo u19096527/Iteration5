@@ -16,6 +16,7 @@ export class HelpTipsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllHelpTips()
+    console.log(this.arrHelpTips)
   }
 
   //Get All the Help Tips

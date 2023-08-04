@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HelpTip } from 'src/app/shared/help-tip';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // Import DomSanitizer
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+
 
 
 @Component({
@@ -14,11 +17,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // Im
 
 export class AddHelptipsComponent {
 
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef;
+
+
   constructor(private dataService: DataService, private router: Router, private sanitizer: DomSanitizer) { 
 
   }
-  videoUrl: SafeResourceUrl | undefined;
-
 
   formAddHelpTip: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -28,74 +32,104 @@ export class AddHelptipsComponent {
   });
 
 
-  // public videoUrl: string = '';
-  public showVideo: boolean = false;
+showVideo: boolean = false;
+videoUrl: string = ""; // Initialize the variable
+isVideoUploaded: boolean = false;
+fileUploadMessage: string = "";
+showNoVideoMessage: boolean = false;
+isTheRightVideoUploaded: boolean = false;
+isWrongVideoUploaded: boolean = false;
+verifyButtons: boolean = false;
+selectedFile: any;
 
-  ngOnInit(): void {
-    this.setCookie('my_cookie', 'my_value', { sameSite: 'none', secure: true });
-  }
+ngOnInit(): void {
+  document.getElementById("videoInput")?.addEventListener("change", this.handleVideoUpload.bind(this));
+}
 
-  setCookie(name: string, value: string, options: { [key: string]: any } = {}): void {
-    let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-    for (const optionKey in options) {
-      if (options.hasOwnProperty(optionKey)) {
-        cookieString += `; ${optionKey}`;
-        const optionValue = options[optionKey];
-        if (optionValue !== true) {
-          cookieString += `=${optionValue}`;
-        }
-      }
-    }
-    document.cookie = cookieString;
+handleVideoUpload(event: Event) {
+  this.selectedFile = (event.target as HTMLInputElement).files?.[0];
+
+  if (this.selectedFile) {
+    this.isVideoUploaded = true;
+    const reader = new FileReader();
+
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      this.videoUrl = event.target?.result as string; // Store the data URL
+    };
+
+    reader.readAsDataURL(this.selectedFile);
+    console.log(this.videoUrl);
+
   }
+  else {
+    this.isVideoUploaded = false
+  }
+}
 
   VerifyVideo() {
-    this.showVideo = true;
-    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.formAddHelpTip.value.video);
-  }
+    //if video is not uploaded when verify video is clicked then...
+    if (this.isVideoUploaded == false) {
+      this.showVideo = false;
+      this.showNoVideoMessage = true;
+      this.isWrongVideoUploaded = false;
+      this.isTheRightVideoUploaded = false;
   
-  getEmbeddedVideoUrl(): SafeResourceUrl {
-    if (this.videoUrl) {
-      const videoId = this.getVideoIdFromUrl(this.videoUrl.toString());
-      if (videoId) {
-        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-        return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
-      }
+      this.fileUploadMessage = "It looks you haven't uploaded a video, please upload a video.";
     }
-    // Return an empty SafeResourceUrl if videoUrl is not available or invalid
-    return this.sanitizer.bypassSecurityTrustResourceUrl('');
-  }
-  getVideoIdFromUrl(url: string): string | null {
-    const pattern1 = /(?:\?v=|&v=|youtu\.be\/)([^&\n?#]+)/;
-    const pattern2 = /^https?:\/\/(?:www\.)?youtube\.com\/embed\/([^\/]+)/;
+    else {
+      this.showVideo = true;
+      this.showNoVideoMessage = false;
+      this.ConfirmButtonsHidden = false;
+
+      this.isWrongVideoUploaded = false;
+      this.isTheRightVideoUploaded = false;
+
+    }
     
-    // Check for the first pattern: https://www.youtube.com/watch?v=4nIFJFgH99w
-    let match = url.match(pattern1);
-    if (match && match[1]) {
-      return match[1];
-    }
-  
-    // Check for the second pattern: https://youtu.be/4nIFJFgH99w
-    match = url.match(pattern2);
-    if (match && match[1]) {
-      return match[1];
-    }
-  
-    // Return null if no match is found
-    return null;
+
   }
+
+  ConfirmButtonsHidden: boolean = false;
+
+  YesVideo() {
+    this.showVideo = false;
+    this.isWrongVideoUploaded = false;
+    this.showNoVideoMessage = false;
+
+    this.isTheRightVideoUploaded = true;
+    this.ConfirmButtonsHidden = true;
+    this.verifyButtons = true;
+  }
+  
+  NoVideo() {
+    this.showVideo = false;
+    this.isWrongVideoUploaded = true;
+    this.isTheRightVideoUploaded = false;
+    this.showNoVideoMessage = false;
+
+    this.fileUploadMessage = "It seems you have uploaded the wrong video. If you intended to upload a different video, please use the correct video file and try again. If you need assistance, feel free to contact our support team for help.";
+
+  }
+
+
+
   
 
   addNewHelpTip() {
-    let newHelpTip = new HelpTip();
-    newHelpTip.Name = this.formAddHelpTip.value.name;
-      newHelpTip.Description = this.formAddHelpTip.value.description;
-      newHelpTip.Date = this.formAddHelpTip.value.date;
-      newHelpTip.Video = this.formAddHelpTip.value.video;
 
-      this.dataService.AddNewHelpTip(newHelpTip).subscribe(
+    let newHelpTip = new HelpTip();
+    newHelpTip.name = this.formAddHelpTip.value.name;
+      newHelpTip.description = this.formAddHelpTip.value.description;
+      newHelpTip.date = this.formAddHelpTip.value.date;
+      // newHelpTip.VideoFile =  this.formAddHelpTip.value.video;
+      newHelpTip.VideoFile =  this.selectedFile;
+
+
+      console.log(newHelpTip)
+
+      this.dataService.AddABlob(newHelpTip).subscribe(
         result => {
-          this.router.navigate(['/helptips'])
+          this.router.navigate(['/help-tips'])
         }
       );
   }

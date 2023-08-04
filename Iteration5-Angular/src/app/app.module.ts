@@ -13,6 +13,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatCardModule} from '@angular/material/card';
 import { StudentsComponent } from './students/students.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { UserRolesComponent } from './user-roles/user-roles.component';
@@ -44,7 +45,7 @@ import { EditUserroleComponent } from './user-roles/edit-userrole/edit-userrole.
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatMenuModule,
+    MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatMenuModule,MatCardModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule, 

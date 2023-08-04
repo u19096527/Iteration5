@@ -35,7 +35,6 @@ export class DataService {
   }
 
   AddABlob(model: HelpTip): Observable<any> {
-    //{ responseType: 'text' }
     return this.httpClient.post(this.apiUrl + 'BlobExplorer/Post', model );
   }
 

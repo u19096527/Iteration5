@@ -37,7 +37,7 @@ export class ViewHelptipComponent {
     }
 
   getVideoUrl(): SafeResourceUrl {
-    const videoId = this.getYouTubeVideoId(this.selectedHelpTip.Video);
+    const videoId = this.getYouTubeVideoId(this.selectedHelpTip.video);
     if (videoId) {
       const url = `https://www.youtube.com/embed/${videoId}`;
       return this.sanitizer.bypassSecurityTrustResourceUrl(url);
